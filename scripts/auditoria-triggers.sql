@@ -129,17 +129,17 @@ AFTER INSERT OR UPDATE OR DELETE ON ESTADO
 FOR EACH ROW
 BEGIN
     IF INSERTING THEN
-        insert_audit(systimestamp,'I','ESTADO','APP',NULL,NULL,NULL,:new.est_id,fetch_user());
+        insert_audit(systimestamp,'I','ESTADOS','APP',NULL,NULL,NULL,:new.est_id,fetch_user());
     END IF;
     IF DELETING THEN
-        insert_audit(systimestamp,'D','ESTADO','APP',NULL,NULL,NULL,:old.est_id,fetch_user());
+        insert_audit(systimestamp,'D','ESTADOS','APP',NULL,NULL,NULL,:old.est_id,fetch_user());
     END IF;
     IF UPDATING THEN
     IF (:old.est_nome <> :new.est_nome) THEN
-            insert_audit(systimestamp,'U','ESTADO','APP','EST_NOME',:old.cid_nome,:new.cid_nome,:new.est_id,fetch_user());
+            insert_audit(systimestamp,'U','ESTADOS','APP','EST_NOME',:old.cid_nome,:new.cid_nome,:new.est_id,fetch_user());
         END IF;
         IF (:old.est_codigo_uf <> :new.est_codigo_uf) THEN
-            insert_audit(systimestamp,'U','ESTADO','APP','EST_CODIGO_UF',:old.est_codigo_uf,:new.est_codigo_uf,:new.est_id,fetch_user());
+            insert_audit(systimestamp,'U','ESTADOS','APP','EST_CODIGO_UF',:old.est_codigo_uf,:new.est_codigo_uf,:new.est_id,fetch_user());
         END IF;
      END IF;
 END;
