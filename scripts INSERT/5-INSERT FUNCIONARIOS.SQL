@@ -309,7 +309,7 @@ VALUES  (1, '100013',
 INSERT INTO FUNCIONARIOS
 VALUES  (1, '100014',
             'RAFAEL','HENRIQUE','MARIANO',
-            to_date('22/12/1993', 'DD/MM/YYYY'),
+            to_date('02/10/1993', 'DD/MM/YYYY'),
             'M',
             '5878597',
             '94511119',
@@ -333,7 +333,7 @@ VALUES  (1, '100014',
 
 INSERT INTO FUNCIONARIOS
 VALUES  (1, '100015',
-            'RAFAEL','HENRIQUE','MARIANO',
+            'ARTHUR','FERNANDES','LORENZO',
             to_date('22/12/1993', 'DD/MM/YYYY'),
             'M',
             '5878597',
@@ -357,7 +357,7 @@ VALUES  (1, '100015',
 
 INSERT INTO FUNCIONARIOS
 VALUES  (1, '100016',
-            'EMANUEL','FELIPE','YAMAMOTO',
+            'DANILO','RICARDO','MORAIS',
             to_date('24/12/1996', 'DD/MM/YYYY'),
             'M',
             '5879997',
@@ -665,8 +665,8 @@ VALUES  (1, '100027',
         
 INSERT INTO FUNCIONARIOS
 VALUES  (1, '100028',
-            'ROMEU','OLIVER','NORMAN',
-            to_date('17/09/1995', 'DD/MM/YYYY'),
+            'RODRIGO','OLEGARIO','COSTA',
+            to_date('30/05/1995', 'DD/MM/YYYY'),
             'M',
             '476581285',
             '9756400000', 
