@@ -6,6 +6,7 @@ CREATE TABLE STAGE (
     stg_contratacao                DATE,
     stg_anos_empresa               NUMBER(2),
     stg_media_diaria_trabalhada    NUMBER(4),
+    stg_horas_extras               NUMBER(5,2),
     stg_departamento               VARCHAR(255),
     stg_cargo                      VARCHAR(255),
     stg_salario                    NUMBER(8,2),
@@ -43,6 +44,16 @@ BEGIN
             EXTRACT(MONTH FROM SYSTIMESTAMP) = EXTRACT(MONTH FROM a1.apo_entrada)
         AND
             a1.apo_fun_id = f1.fun_id
+        ),
+        (SELECT
+            bh.ban_horas_extras
+        FROM BANCO_HORAS bh
+        WHERE
+            bh.ban_fun_id = f1.fun_id
+        AND
+            EXTRACT(YEAR FROM bh.ban_mes) = EXTRACT(YEAR FROM SYSDATE)
+        AND
+            EXTRACT(MONTH FROM bh.ban_mes) = EXTRACT(MONTH FROM SYSDATE)
         ),
         d1.dep_descricao,
         ca1.car_descricao,
