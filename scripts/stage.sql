@@ -26,9 +26,16 @@ CREATE TABLE STAGE (
 -- ci1 = CIDADES
 -- e1  = ESTADOS
 
+CREATE OR REPLACE FUNCTION minutes_between_apontamentos(entrada TIMESTAMP, almoco TIMESTAMP, volta TIMESTAMP, saida TIMESTAMP) RETURN NUMBER IS
+BEGIN
+    RETURN EXTRACT(HOUR FROM (saida - volta) + (almoco - entrada)) * 60 +
+        EXTRACT(MINUTE FROM (saida - volta) + (almoco - entrada));
+END;
+/
+
 CREATE PROCEDURE proc_stage AS 
 BEGIN
-    DELETE STAGE;
+    DELETE FROM STAGE;
     INSERT INTO STAGE
     SELECT
         f1.fun_id,
@@ -58,18 +65,18 @@ BEGIN
         d1.dep_descricao,
         ca1.car_descricao,
         f1.fun_salario,
-        (SELECT MIN(hf1.hfun_salario) FROM H_FUNCIONARIOS AS hf1 WHERE hf1.fun_id = f1.fun_id),
-        (SELECT AVG(f2.fun_salario) FROM FUNCIONARIOS AS f2 WHERE f2.fun_dep_id = f1.fun_dep_id),
-        (SELECT COUNT(DISTINCT hf1.hfun_car_id) FROM H_FUNCIONARIOS AS hf1 WHERE hf1.hfun_id = f1.fun_id),
-        (SELECT COUNT(*) FROM FUNCIONARIOS AS f2 WHERE f2.fun_dep_id = f1.fun_dep_id),
-        (SELECT COUNT(*) FROM FUNCIONARIOS AS f2 WHERE f2.fun_car_id = f1.fun_car_id),
+        (SELECT MIN(hf1.hfun_salario) FROM H_FUNCIONARIOS hf1 WHERE hf1.hfun_id = f1.fun_id),
+        (SELECT AVG(f2.fun_salario) FROM FUNCIONARIOS f2 WHERE f2.fun_dep_id = f1.fun_dep_id),
+        (SELECT COUNT(DISTINCT hf1.hfun_car_id) FROM H_FUNCIONARIOS hf1 WHERE hf1.hfun_id = f1.fun_id),
+        (SELECT COUNT(*) FROM FUNCIONARIOS f2 WHERE f2.fun_dep_id = f1.fun_dep_id),
+        (SELECT COUNT(*) FROM FUNCIONARIOS f2 WHERE f2.fun_car_id = f1.fun_car_id),
         ci1.cid_nome,
         e1.est_nome
     FROM
-        FUNCIONARIOS AS f1,
-        LEFT JOIN DEPARTAMENTOS AS d1 ON d1.dep_id = f1.fun_dep_id
-        LEFT JOIN CARGOS AS c1 ON ca1.car_id = f1.fun_car_id
-        LEFT JOIN CIDADES AS ci1 ON ci1.cid_id = f1.fun_cid_id
-        LEFT JOIN ESTADOS AS e1 ON e1.est_id = ci1.cid_est_id;
+        FUNCIONARIOS f1
+        LEFT JOIN DEPARTAMENTOS d1 ON d1.dep_id = f1.fun_dep_id
+        LEFT JOIN CARGOS ca1 ON ca1.car_id = f1.fun_car_id
+        LEFT JOIN CIDADES ci1 ON ci1.cid_id = f1.fun_cid_id
+        LEFT JOIN ESTADOS e1 ON e1.est_id = ci1.cid_est_id;
 END;
 /
